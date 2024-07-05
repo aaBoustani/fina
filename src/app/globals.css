@@ -2,7 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+main {
+  margin: 120px 50px 10px;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  main {
+    margin: 150px 50px 10px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  main {
+    margin: 100px 200px 10px;
+  }
+}
+
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -30,4 +48,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
+} */
