@@ -2,9 +2,9 @@ import Image from "next/image";
 
 export default function HowItWorks(): JSX.Element {
     return (
-        <div className="flex flex-col p-24">
-            <h1 className="text-4xl indent-[30%]">How It Works</h1>
-            <div className="items-center justify-center grid grid-cols-1 gap-4 mt-8 sm:grid-cols-2">
+        <div className="flex flex-col md:p-24">
+            <h1 className="text-3xl md:text-4xl md:indent-[30%]">How It Works</h1>
+            <div className="items-center justify-center grid grid-cols-1 mt-8 md:w-[800px] md:grid-cols-2">
                 <Image className="object-cover"
                     src="/food1.jpeg"
                     alt="Image of a cooked meal"
@@ -41,4 +41,3 @@ export default function HowItWorks(): JSX.Element {
         </div >
     );
 };
-// bg-[url('/public/food1.jpeg')]

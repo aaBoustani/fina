@@ -1,60 +1,58 @@
 "use client";
 
-import Image from 'next/image';
 import { useState, ChangeEvent, useRef } from 'react';
 import { isMobile } from 'react-device-detect';
+import { useRouter } from 'next/navigation';
 import SvgIcon from './svgIcon';
-
+import { uploadImage } from '@/services/upload';
 
 export default function UploadImage(): JSX.Element {
-    const [file, setFile] = useState<File | null>(null);
-    const [image, setImage] = useState<string>("");
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const router = useRouter();
 
-    const handleButtonClick = () => {
+    const handleUploadButtonClick = () => {
         fileInputRef.current?.click();
     };
 
     const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files && event.target.files[0]) {
-            setFile(event.target.files[0]);
-            var reader = new FileReader();
-            reader.readAsDataURL(event.target.files[0]);
-            reader.onload = function () {
-                setImage(reader.result?.toString() as string);
-            };
+            setIsLoading(true);
+            uploadImage(event.target.files[0])
+                .then(data => router.push(`/analysis/${data.id}`))
+                .finally(() => setIsLoading(false));
         }
     };
 
     return (
-        <div className="flex items-center space-x-6 pb-6 pt-16 px-40">
-            <div className="shrink-0 w-16 h-16">
-                {file &&
-                    <Image
-                        className="h-16 w-16 object-cover rounded-full"
-                        src={image}
-                        alt="Selected photo"
-                        width={64}
-                        height={64}
-                    />
-                }
+        <div className="flex items-center md:space-x-6 md:pb-6 md:pt-16 md:px-60">
+            <div>
+                <button
+                    type="button"
+                    onClick={handleUploadButtonClick}
+                    disabled={isLoading}
+                    className="flex md:px-4 md:py-2 text-xs my-4 py-1 px-2 items-center text-white bg-primary rounded disabled:bg-primary-light hover:bg-primary-light"
+                >
+                    {!isLoading &&
+                        <span className="flex items-center justify-between gap-2">
+                            <SvgIcon svgFilename="salad.svg" width="24px" height="24px" />
+                            Upload a picture of your food
+                        </span>}
+                    {isLoading &&
+                        <span className="flex items-center">
+                            <svg className="animate-spin h-6 w-6 mr-3 text-white -ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"></svg>
+                            Uploading...
+                        </span>}
+                </button>
+                <input
+                    type="file"
+                    accept="image/*"
+                    capture={isMobile ? 'environment' : undefined}
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    className="hidden"
+                />
             </div>
-            <button
-                type="button"
-                onClick={handleButtonClick}
-                className="flex px-4 py-2 text-white bg-primary rounded hover:bg-primary-light"
-            >
-                <SvgIcon svgFilename="salad.svg" width="24px" height="24px" />
-                Upload a picture of your food
-            </button>
-            <input
-                type="file"
-                accept="image/*"
-                capture={isMobile ? 'environment' : undefined}
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                className="hidden"
-            />
         </div>
     );
 };
