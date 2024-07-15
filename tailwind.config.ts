@@ -5,6 +5,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {
@@ -15,14 +16,14 @@ const config: Config = {
           dark: '#FF4500',    // OrangeRed
         },
         secondary: {
-          light: '#90EE90',   // LightGreen
-          DEFAULT: '#32CD32', // LimeGreen
-          dark: '#228B22',    // ForestGreen
+          light: '#F5DEB3',   // Beige
+          DEFAULT: '#FFC080', // Tangerine
+          dark: '#FFA07A',    // Light Salmon (same as primary light)
         },
         accent: {
-          light: '#FFD700',   // Gold
-          DEFAULT: '#FFA500', // Orange
-          dark: '#FF8C00',    // DarkOrange
+          light: '#FFC67D',   // Peach
+          DEFAULT: '#FF99CC', // Pastel Orange
+          dark: '#FF8C69',    // Burnt Orange
         },
         neutral: {
           light: '#F0F0F0',   // Light Gray
@@ -42,6 +43,8 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('flowbite/plugin'),
+  ],
 };
 export default config;
